@@ -75,5 +75,3 @@ octave-workspace
 
 # End of https://www.gitignore.io/api/matlab
 *.mat
-*.mat
-F3/Processed/bavgP.mat
