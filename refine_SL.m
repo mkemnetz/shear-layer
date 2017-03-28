@@ -5,7 +5,7 @@ close all;
 % load('/Volumes/LaCie/MATLAB/Research/Shear Layer/F3/Processed/F2_F14_processed.mat')
 
 if ispc
-    preamble = 'C:\Users\mkemnetz\Documents\MATLAB\Research\Shear Layer\F3';
+    preamble = 'C:\Users\mkemnetz\Documents\MATLAB\Research\Shear Layer\shear-layer\F3';
 elseif isunix
     preamble = '/Volumes/LaCie/MATLAB/Research/Shear Layer/F3';
 else
@@ -34,9 +34,9 @@ parfor i = 1:N
 end
 
 %%
-fine = 200;
+fine = 100;
 % nframes = 2000;
-nframes = 4000;
+nframes = 45000;
 % parfor i = 1:size(phase_Final, 2) 
 parfor i = 1:nframes
     l = size(phase_Final{i}, 2);
