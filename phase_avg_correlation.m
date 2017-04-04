@@ -57,56 +57,59 @@ N  = size(phase_Final_new, 3) - mod(N, phaseShift);
 NN = N/phaseShift;
 
 %%
-mean_OPD_phi       = zeros(size(phase_Final_new(:, :, 1), 1), size(phase_Final_new(:, :, 1), 2), phaseShift);
-var_OPD_phi        = zeros(size(phase_Final_new(:, :, 1), 1), size(phase_Final_new(:, :, 1), 2), phaseShift);
-
-
+C      = zeros(2*size(phase_Final_new(:, :, 1), 1)-1, 2*size(phase_Final_new(:, :, 1), 2)-1, N);
+C_mean = zeros(2*size(phase_Final_new(:, :, 1), 1)-1, 2*size(phase_Final_new(:, :, 1), 2)-1, phaseShift);
 for i = 1:phaseShift
     a = phase_Final_new(:, :, i:phaseShift:N);
-%     a = cat(3,a{:}); 
     
-    a_mean = mean(a, 3);
-    a_var  = var(a,0, 3);
-    mean_OPD_phi(:, :, i) = a_mean;
-    var_OPD_phi(:, :, i)  = a_var;
-    b = a-a_mean;
-end
-center_var_OPD_phi =  squeeze(var_OPD_phi(100, 100, :))';
-
-%%
-mean_removed_phase = zeros(size(phase_Final_new(:, :, 1), 1), size(phase_Final_new(:, :, 1), 2), size(phase_Final_new(:, :, 1), 3));
-for k = 1:NN
-    a = phase_Final_new;
-%     a = cat(3,a{:}); 
-    c = a(:, :, 1+(k-1)*phaseShift:k*phaseShift);
-    
-    mean_removed_phase(:, :, 1+(k-1)*phaseShift:k*phaseShift) = ...
-        c - mean_OPD_phi;
+    for k = 1:size(a, 3)
+        C(:, :, k) = xcorr2(a(:, :, k));
+    end
+    C_mean(:, :, i) = mean(C, 3);
 end
 
 %%
-% phase_sampled = cat(3,phase_Final_new{:});
-% phase_sampled = phase_sampled(:, :, 1:N);
-phase_sampled = phase_Final_new(:, :, 1:N);
-
-% x_Final2 = cellfun(@(x) x.*(15e-3),x_Final,'un',0);
-% x_Final2 = cellfun(@(x) x./(19.7e-3),x_Final2,'un',0);
-% 
-% y_Final2 = cellfun(@(x) x.*(15e-3),y_Final,'un',0);
-% y_Final2 = cellfun(@(x) x./(19.7e-3),y_Final2,'un',0);
-
-%%
-phi = repmat(linspace(0, 4, phaseShift),1,NN);
+figure(); 
+surf(C_mean(:, :, 21), 'EdgeColor', 'none'); 
+view(2); 
+colormap jet;
+title('BL Peak');
 
 figure(); 
-set(gcf,'units','centimeters','position',[0 0 32 24]);
-plot(phi(1:phaseShift), center_var_OPD_phi)
-% vline([0.5 0.75 1.35 1.60 2.4 2.75 3.35 3.75],{'g','r','g','r','g','r','g','r'})
-vline([0.5 0.75 1.35 1.60 2.4 2.75 3.35 3.75],{'b','r','r','b','b','r','r','b'}, {'SL', 'BL', 'SL', 'BL','SL', 'BL','SL', 'BL'});
-xlim([0 4]);
-xticks([0 1/4 1/2 3/4 1 5/4 3/2 7/4 2 ... 
-    9/4 5/2 11/4 3 13/4 7/2 15/4 4])
-xticklabels({'0' ,'\pi/4', '\pi/2', '3\pi/4', '\pi', '5\pi/4',...
-    '3\pi/2', '7\pi/4', '2\pi', '9\pi/4', '5\pi/2', '11\pi/4' ...
-    '3\pi', '13\pi/4', '7\pi/2', '15\pi/4', '4\pi'})
-title('Temporal Variance at x = 0, y = 0')
+surf(C_mean(:, :, 45), 'EdgeColor', 'none'); 
+view(2); 
+colormap jet;
+title('BL Trough');
+
+figure(); 
+surf(C_mean(:, :, 76), 'EdgeColor', 'none'); 
+view(2); 
+colormap jet;
+title('BL Peak');
+
+figure(); 
+surf(C_mean(:, :, 103), 'EdgeColor', 'none'); 
+view(2); 
+colormap jet;
+title('BL Trough');
+
+figure();
+plot(C_mean(100, 100:end, 21));
+hold on;
+plot(C_mean(100, 100:end, 45));
+plot(C_mean(100, 100:end, 76));
+plot(C_mean(100, 100:end, 103));
+title('Streamwise');
+legend('peak', 'trough', 'peak', 'trough');
+
+figure();
+plot(C_mean(100:end, 100, 21));
+hold on;
+plot(C_mean(100:end, 100, 45));
+plot(C_mean(100:end, 100, 76));
+plot(C_mean(100:end, 100, 103));
+title('Spanwise');
+legend('peak', 'trough', 'peak', 'trough');
+
+
+
