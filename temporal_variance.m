@@ -49,7 +49,7 @@ y_4d           = trimMat(y_Final2_m, trim4d);
 
 %%
 phaseShift      = 110;
-phaseStart      = 68;
+phaseStart      = 66;
 phase_Final_new = phase_4d(:, :, phaseStart:end);
 
 N  = size(phase_Final_new, 3);
