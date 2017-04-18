@@ -411,47 +411,55 @@ y_4d_shift_2dimensional = repmat(vertcat(flipud(y_4d_shift(2:end, :, 1)), -1*y_4
 y_4d_shift_2dimensional = y_4d_shift_2dimensional(:, 1:65);
 
 figure()
-set(gcf,'units','centimeters','position',[0 0 2.5*8 8]);
+set(gcf,'units','centimeters','position',[0 0 2*8 8]);
 
-subplot(1,2,1)
-contourf(x_4d_shift_2dimensional, y_4d_shift_2dimensional, C_mean_4d(:, :, 21)./C_mean_4d(100, 33, 21), 10);
+s1=subplot(1,2,1)
+ax=contourf(x_4d_shift_2dimensional, y_4d_shift_2dimensional, C_mean_4d(:, :, 21)./C_mean_4d(100, 33, 21), [-.3:0.2:1]);
 
 colormap jet;
 title('Local Maxima', 'interpreter', 'latex');
 xlabel('$\Delta x/\delta$', 'interpreter', 'latex');
-ylabel('$\Delta y/\delta$', 'interpreter', 'latex');
+ylabel('$\Delta z/\delta$', 'interpreter', 'latex');
 grid on;
 grid minor;
-caxis([-1 1]);
+caxis([-0.3 1]);
+
+s1Pos = get(s1,'position');
+s1Pos(1)   = 0.095;
+set(s1,'position',s1Pos);
 
 hb = colorbar('location','eastoutside');
 w = hb.Position;
-w(1) = 0.468;
-w(2) = 0.14;
+w(1) = 0.43;
+w(2) = s1Pos(2);
 w(3) = 0.03;
-w(4) = 0.79;
+w(4) = s1Pos(4);
 hb.Position = w;
+axis equal;
 
+s1Pos = get(s1,'position');
+s1Pos(1)   = 0.095;
+set(s1,'position',s1Pos);
 
 subplot(1,2,2)
-contourf(x_4d_shift_2dimensional, y_4d_shift_2dimensional, C_mean_4d(:, :, 45)./C_mean_4d(100, 33, 45), 10);
+contourf(x_4d_shift_2dimensional, y_4d_shift_2dimensional, C_mean_4d(:, :, 45)./C_mean_4d(100, 33, 45), [-.3:0.2:1]);
 
 colormap jet;
-colorbar;
+
 title('Local Minima', 'interpreter', 'latex');
 xlabel('$\Delta x/\delta$', 'interpreter', 'latex');
-ylabel('$\Delta y/\delta$', 'interpreter', 'latex');
+ylabel('$\Delta z/\delta$', 'interpreter', 'latex');
 grid on;
 grid minor;
-caxis([-1 1]);
-
-hb = colorbar('location','eastoutside');
-w = hb.Position;
-w(1) = 0.908;
-w(2) = 0.14;
-w(3) = 0.03;
-w(4) = 0.79;
-hb.Position = w;
+caxis([-.3 1]);
+axis equal;
+% hb = colorbar('location','eastoutside');
+% w = hb.Position;
+% w(1) = 0.908;
+% w(2) = 0.14;
+% w(3) = 0.03;
+% w(4) = 0.79;
+% hb.Position = w;
 
 % figure()
 % set(gcf,'units','centimeters','position',[0 0 1.2*8 8]);

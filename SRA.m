@@ -21,7 +21,7 @@ load(fullfile(preamble, 'Processed', 'yBL.mat'));
 load(fullfile(preamble, 'Processed', 'bavgP.mat'));
 load(fullfile(preamble, 'Processed', 'Piyush_colormap.mat'));
 load(fullfile(preamble, 'Processed', 'Ubar.mat'));
-load(fullfile(preamble, 'Processed', 'center_temporal_variance3.mat'));
+load(fullfile(preamble, 'Processed', 'center_temporal_variance2.mat'));
 load(fullfile(preamble, 'Processed', 'synvelmat.mat'));
 
 Ue = csvread(fullfile(preamble, 'Processed', 'Ue.txt'));
